@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TouchableOpacity } from "react-native";
-import { FlatList, Text, View, StyleSheet } from "react-native";
+import { FlatList, Text, View, StyleSheet, Alert } from "react-native";
 import { ListItem } from "react-native-elements";
 import { SwipeRow } from "react-native-swipe-list-view";
 import { connect } from "react-redux";
@@ -32,7 +32,26 @@ class Favorites extends Component {
           <View style={styles.deleteView}>
             <TouchableOpacity
               style={styles.deleteTouchable}
-              onPress={() => this.props.deleteFavorite(item.id)}
+              onPress={() =>
+                Alert.alert(
+                  "Delete Favorite?",
+                  "Are you sure you wish to delete the favorite campsite " +
+                    item.name +
+                    "?",
+                  [
+                    {
+                      text: "Cancel",
+                      onPress: () => console.log(item.name + "Not Deleted"),
+                      style: "cancel",
+                    },
+                    {
+                      text: "OK",
+                      onPress: () => this.props.deleteFavorite(item.id),
+                    },
+                  ],
+                  { cancelable: false }
+                )
+              }
             >
               <Text style={styles.deleteText}>Delete</Text>
             </TouchableOpacity>
