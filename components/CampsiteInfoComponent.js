@@ -36,6 +36,7 @@ function RenderCampsite(props) {
   const view = React.createRef();
 
   const recognizeDrag = ({ dx }) => (dx < -200 ? true : false);
+  const recognizeComment = ({ dx }) => (dx > 200 ? true : false);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
@@ -68,6 +69,8 @@ function RenderCampsite(props) {
           ],
           { cancelable: false }
         );
+      } else if (recognizeComment(gestureState)) {
+        props.onShowModal();
       }
       return true;
     },
@@ -103,7 +106,7 @@ function RenderCampsite(props) {
             <Icon
               name={"pencil"}
               type="font-awesome"
-              color="#56377D"
+              color="#5637DD"
               raised
               reverse
               onPress={() => props.onShowModal()}
@@ -192,7 +195,6 @@ class CampsiteInfo extends Component {
       rating: 5,
       author: " ",
       text: " ",
-      date: new Date(),
     });
   }
 
